@@ -9,6 +9,7 @@
 
   var MutationObserver = window.MutationObserver;
   var lessonsLeft = 0;
+  var lessonsOnPage;
 
   var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
@@ -18,6 +19,7 @@
       $nodes.each(function() {
         $(this).find(".lessons-left:visible").each(function() {
           var rawCounts = $(this).text();
+          lessonsOnPage = true;
 
           if(rawCounts) {
             var lessonsInChapter = rawCounts.split("/")[1];
@@ -27,7 +29,9 @@
           }
         });
 
-        drawLessonsCount(lessonsLeft);
+        if(lessonsOnPage) {
+          drawLessonsCount(lessonsLeft);
+        }
       });
     });
   });
