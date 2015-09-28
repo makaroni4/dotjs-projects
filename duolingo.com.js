@@ -7,30 +7,29 @@
     }
   }
 
-  var MutationObserver = window.MutationObserver;
-  var lessonsLeft = 0;
-  var lessonsOnPage;
+  function countLessons() {
+    var count = 0;
 
+    $(".skill-tree .lessons-left:visible").each(function(index, element) {
+      var text = $(element).text();
+
+      if(text) {
+        count += text.split("/")[1] - text.split("/")[0];
+      }
+    })
+
+    return count;
+  }
+
+  var MutationObserver = window.MutationObserver;
   var observer = new MutationObserver(function(mutations) {
     mutations.forEach(function(mutation) {
       var newNodes = mutation.addedNodes;
       var $nodes = $(newNodes);
 
       $nodes.each(function() {
-        $(this).find(".lessons-left:visible").each(function() {
-          var rawCounts = $(this).text();
-          lessonsOnPage = true;
-
-          if(rawCounts) {
-            var lessonsInChapter = rawCounts.split("/")[1];
-            var tookLessonsInChapter = rawCounts.split("/")[0];
-
-            lessonsLeft += lessonsInChapter - tookLessonsInChapter;
-          }
-        });
-
-        if(lessonsOnPage) {
-          drawLessonsCount(lessonsLeft);
+        if($(this).find(".skill-tree .lessons-left:visible").length) {
+          drawLessonsCount(countLessons());
         }
       });
     });

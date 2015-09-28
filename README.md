@@ -1,5 +1,5 @@
 # dotjs-projects
-Collection of dotjs extensions
+Collection of dotjs projects
 
 1. [duolingo.com.js](https://github.com/makaroni4/dotjs-projects/blob/master/duolingo.com.js)
 
