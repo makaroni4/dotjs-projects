@@ -1,10 +1,15 @@
 (function() {
   function drawLessonsCount(count) {
     if($(".dot-js-lessons-count").length) {
+      $(".dot-js-lessons-container").show();
       $(".dot-js-lessons-count").text(count);
     } else {
-      $(".topbar-nav-main").append("<li style='display: block; color: #fff; padding: 8px 15px;'>Осталось уроков: <span class='dot-js-lessons-count'>" + count + "</span></li>");
+      $(".topbar-nav-main").append("<li class='dot-js-lessons-container' style='display: block; color: #fff; padding: 8px 15px;'>Осталось уроков: <span class='dot-js-lessons-count'>" + count + "</span></li>");
     }
+  }
+
+  function hideLessonsCount() {
+    $(".dot-js-lessons-container").hide();
   }
 
   function countLessons() {
@@ -28,11 +33,15 @@
       var $nodes = $(newNodes);
 
       $nodes.each(function() {
-        if($(this).find(".skill-tree .lessons-left:visible").length) {
+        if($(".skill-tree .lessons-left:visible").length) {
           drawLessonsCount(countLessons());
         }
       });
     });
+
+    if($(".skill-tree").length === 0) {
+      hideLessonsCount();
+    }
   });
 
   observer.observe(document.body, {
